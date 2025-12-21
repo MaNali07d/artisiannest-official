@@ -5,7 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Cart from '@/components/Cart';
-import FloatingButtons from '@/components/FloatingButtons';
+
 import Chatbot from '@/components/Chatbot';
 
 const CustomOrder = () => {
@@ -93,7 +93,6 @@ const CustomOrder = () => {
         </main>
         <Footer />
         <Cart />
-        <FloatingButtons />
         <Chatbot />
       </div>
     );
@@ -263,7 +262,7 @@ const CustomOrder = () => {
 
       <Footer />
       <Cart />
-      <FloatingButtons />
+      
       <Chatbot />
     </div>
   );

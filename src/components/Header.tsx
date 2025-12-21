@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Search, ShoppingBag, Menu, X, Instagram } from 'lucide-react';
+import { Search, ShoppingBag, Menu, X } from 'lucide-react';
 import { useCart } from '@/contexts/CartContext';
 import { useTheme } from '@/contexts/ThemeContext';
 import ThemeToggle from './ThemeToggle';
@@ -36,16 +36,6 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-6">
-            <a
-              href="https://instagram.com/artisiannest"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
-            >
-              <Instagram size={18} />
-              <span className="text-sm">@artisiannest</span>
-            </a>
-            
             {/* Search Bar */}
             <div className="relative">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -125,15 +115,6 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
         {isMobileMenuOpen && (
           <nav className="lg:hidden pb-4 animate-slide-up">
             <div className="flex flex-col gap-2">
-              <a
-                href="https://instagram.com/artisiannest"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 p-3 rounded-xl hover:bg-muted transition-colors"
-              >
-                <Instagram size={20} className="text-primary" />
-                <span>@artisiannest</span>
-              </a>
               <Link
                 to="/custom-order"
                 className="flex items-center gap-3 p-3 rounded-xl hover:bg-muted transition-colors"

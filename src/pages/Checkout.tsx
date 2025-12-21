@@ -6,7 +6,7 @@ import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Cart from '@/components/Cart';
-import FloatingButtons from '@/components/FloatingButtons';
+
 import Chatbot from '@/components/Chatbot';
 
 const Checkout = () => {
@@ -70,7 +70,6 @@ const Checkout = () => {
           </div>
         </main>
         <Footer />
-        <FloatingButtons />
         <Chatbot />
       </div>
     );
@@ -108,7 +107,6 @@ const Checkout = () => {
           </div>
         </main>
         <Footer />
-        <FloatingButtons />
         <Chatbot />
       </div>
     );
@@ -383,7 +381,7 @@ const Checkout = () => {
 
       <Footer />
       <Cart />
-      <FloatingButtons />
+      
       <Chatbot />
     </div>
   );
