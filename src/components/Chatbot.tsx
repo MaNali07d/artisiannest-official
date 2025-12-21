@@ -354,10 +354,10 @@ const Chatbot = () => {
 
   return (
     <>
-      {/* Fixed Chat Button - Always at bottom corner */}
+      {/* Fixed Chat Button - At bottom right corner (WhatsApp position) */}
       <button
         onClick={handleOpen}
-        className={`floating-btn bottom-6 right-4 md:bottom-44 md:right-6 bg-primary text-primary-foreground
+        className={`floating-btn bottom-24 right-4 md:bottom-6 md:right-6 bg-primary text-primary-foreground
                    ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'} transition-all duration-300`}
         aria-label="Open chat"
       >
