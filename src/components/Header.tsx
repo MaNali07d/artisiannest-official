@@ -37,15 +37,20 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-6">
             {/* Search Bar */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground 
+                               group-focus-within:text-primary transition-colors duration-300" />
               <input
                 type="text"
-                placeholder="Search gifts..."
+                placeholder="Search handmade gifts…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-48 xl:w-64 pl-10 pr-4 py-2 bg-muted/50 border border-border/50 rounded-full text-sm 
-                         focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 transition-all"
+                className="w-64 xl:w-80 pl-12 pr-5 py-2.5 bg-muted/60 border border-border/40 rounded-full text-sm 
+                         shadow-[inset_0_1px_3px_rgba(0,0,0,0.05)] backdrop-blur-sm
+                         hover:bg-muted/80 hover:border-primary/30 hover:shadow-[inset_0_1px_4px_rgba(0,0,0,0.08)]
+                         focus:outline-none focus:bg-background focus:ring-2 focus:ring-primary/40 focus:border-primary/50 
+                         focus:shadow-[0_0_0_4px_hsl(var(--primary)/0.1)] 
+                         transition-all duration-300 ease-out"
               />
             </div>
           </nav>
@@ -89,15 +94,19 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
         {/* Mobile Search Bar */}
         {isSearchOpen && (
           <div className="lg:hidden pb-4 animate-slide-up">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <div className="relative group">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground 
+                               group-focus-within:text-primary transition-colors duration-300" />
               <input
                 type="text"
-                placeholder="Search gifts..."
+                placeholder="Search handmade gifts…"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 bg-muted/50 border border-border/50 rounded-xl text-sm 
-                         focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+                className="w-full pl-12 pr-5 py-3.5 bg-muted/60 border border-border/40 rounded-2xl text-base 
+                         shadow-[inset_0_1px_3px_rgba(0,0,0,0.05)] backdrop-blur-sm
+                         focus:outline-none focus:bg-background focus:ring-2 focus:ring-primary/40 focus:border-primary/50 
+                         focus:shadow-[0_0_0_4px_hsl(var(--primary)/0.1)] 
+                         transition-all duration-300 ease-out"
                 autoFocus
               />
             </div>
