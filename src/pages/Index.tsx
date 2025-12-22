@@ -1,11 +1,16 @@
 import { useState, useMemo } from 'react';
 import { Sparkles, Gift, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import Cart from '@/components/Cart';
 import Footer from '@/components/Footer';
-
 import Chatbot from '@/components/Chatbot';
+import DoodleBackground from '@/components/DoodleBackground';
+import Mascot from '@/components/Mascot';
+import PersonalBadge from '@/components/PersonalBadge';
+import SparkleButton from '@/components/SparkleButton';
+import TestimonialCarousel from '@/components/TestimonialCarousel';
 import { products } from '@/data/products';
 
 const Index = () => {
@@ -19,10 +24,11 @@ const Index = () => {
   }, [searchQuery]);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background">
+    <div className="min-h-screen flex flex-col bg-background relative">
+      <DoodleBackground />
       <Header searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       
-      <main className="flex-1">
+      <main className="flex-1 relative z-10">
         {/* Hero Section */}
         <section className="relative overflow-hidden py-12 md:py-20 px-4">
           {/* Background decoration */}
@@ -33,21 +39,26 @@ const Index = () => {
           </div>
 
           <div className="container mx-auto text-center relative z-10">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6 animate-slide-up">
+            {/* Personal Badge */}
+            <div className="flex justify-center mb-4 animate-slide-up">
+              <PersonalBadge />
+            </div>
+
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6 animate-slide-up" style={{ animationDelay: '50ms' }}>
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">Handcrafted with Love</span>
             </div>
             
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 animate-slide-up" style={{ animationDelay: '100ms' }}>
-              Welcome to{' '}
-              <span className="text-gradient">Artisiannest</span>
+              <span className="font-handwritten text-4xl md:text-6xl lg:text-7xl">Welcome to</span>{' '}
+              <span className="font-handwritten text-4xl md:text-6xl lg:text-7xl text-gradient-soft block mt-2">Artisiannest</span>
             </h1>
             
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-8 animate-slide-up" style={{ animationDelay: '200ms' }}>
               Unique handcrafted gifts for birthdays, festivals, anniversaries and special moments.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 animate-slide-up" style={{ animationDelay: '300ms' }}>
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-8 animate-slide-up" style={{ animationDelay: '300ms' }}>
               <span className="flex items-center gap-2 px-4 py-2 bg-soft-pink rounded-full text-sm">
                 <Gift className="w-4 h-4" />
                 Birthday Gifts
@@ -61,6 +72,21 @@ const Index = () => {
                 Custom Hampers
               </span>
             </div>
+
+            {/* Custom Order Button with Sparkle */}
+            <div className="animate-slide-up" style={{ animationDelay: '350ms' }}>
+              <Link to="/custom-order">
+                <SparkleButton>
+                  <Gift className="w-4 h-4" />
+                  Create Custom Order
+                </SparkleButton>
+              </Link>
+            </div>
+
+            {/* Mascot */}
+            <div className="absolute bottom-0 right-4 md:right-20 hidden md:block animate-bounce-in" style={{ animationDelay: '500ms' }}>
+              <Mascot pointing="left" message="Check out our gifts! ✨" />
+            </div>
           </div>
         </section>
 
@@ -68,9 +94,8 @@ const Index = () => {
         <section className="py-8 md:py-12 px-4">
           <div className="container mx-auto">
             <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl md:text-3xl font-bold">
-                Our Handmade{' '}
-                <span className="text-gradient">Collection</span>
+              <h2 className="text-2xl md:text-3xl">
+                <span className="font-handwritten text-3xl md:text-4xl text-gradient-soft">Our Handmade Collection</span>
               </h2>
               <span className="text-sm text-muted-foreground">
                 {filteredProducts.length} products
@@ -100,12 +125,14 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Testimonials Section */}
+        <TestimonialCarousel />
+
         {/* Why Choose Us Section */}
-        <section className="py-12 md:py-16 px-4 bg-muted/30">
+        <section className="py-12 md:py-16 px-4 bg-muted/30 relative">
           <div className="container mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-center mb-10">
-              Why Choose{' '}
-              <span className="text-gradient">Artisiannest</span>?
+            <h2 className="text-2xl md:text-3xl text-center mb-10">
+              <span className="font-handwritten text-3xl md:text-4xl text-gradient-soft">Why Choose Artisiannest?</span>
             </h2>
             <div className="grid md:grid-cols-3 gap-6">
               {[
@@ -117,7 +144,7 @@ const Index = () => {
                 {
                   icon: '✨',
                   title: 'Fully Customizable',
-                  description: 'Tell us your ideas and we\'ll bring them to life.',
+                  description: "Tell us your ideas and we'll bring them to life.",
                 },
                 {
                   icon: '💝',
@@ -136,6 +163,11 @@ const Index = () => {
                 </div>
               ))}
             </div>
+          </div>
+
+          {/* Mascot pointing to custom orders */}
+          <div className="absolute bottom-4 left-4 hidden lg:block">
+            <Mascot pointing="right" />
           </div>
         </section>
       </main>
