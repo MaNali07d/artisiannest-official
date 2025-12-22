@@ -62,13 +62,6 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
 
             <ThemeToggle />
 
-            <Link
-              to="/custom-order"
-              className="hidden sm:flex btn-secondary text-sm px-4 py-2"
-            >
-              Custom Order
-            </Link>
-
             <button
               onClick={() => setIsCartOpen(true)}
               className="relative p-2 md:px-4 md:py-2 btn-primary flex items-center gap-2"
@@ -115,14 +108,7 @@ const Header = ({ searchQuery, setSearchQuery }: HeaderProps) => {
         {isMobileMenuOpen && (
           <nav className="lg:hidden pb-4 animate-slide-up">
             <div className="flex flex-col gap-2">
-              <Link
-                to="/custom-order"
-                className="flex items-center gap-3 p-3 rounded-xl hover:bg-muted transition-colors"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <span>✨</span>
-                <span>Custom Order</span>
-              </Link>
+              {/* Menu items can be added here */}
             </div>
           </nav>
         )}

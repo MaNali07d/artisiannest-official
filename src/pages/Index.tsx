@@ -44,11 +44,6 @@ const Index = () => {
               <PersonalBadge />
             </div>
 
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6 animate-slide-up" style={{ animationDelay: '50ms' }}>
-              <Sparkles className="w-4 h-4 text-primary" />
-              <span className="text-sm font-medium text-primary">Handcrafted with Love</span>
-            </div>
-            
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-4 animate-slide-up" style={{ animationDelay: '100ms' }}>
               <span className="font-handwritten text-4xl md:text-6xl lg:text-7xl">Welcome to</span>{' '}
               <span className="font-handwritten text-4xl md:text-6xl lg:text-7xl text-gradient-soft block mt-2">Artisiannest</span>
