@@ -19,6 +19,7 @@ export default {
     extend: {
       fontFamily: {
         nunito: ["Nunito", "sans-serif"],
+        handwritten: ["Caveat", "cursive"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -115,6 +116,28 @@ export default {
           "70%": { transform: "scale(0.95)" },
           "100%": { opacity: "1", transform: "scale(1)" },
         },
+        sparkle: {
+          "0%, 100%": { opacity: "0", transform: "scale(0)" },
+          "50%": { opacity: "1", transform: "scale(1)" },
+        },
+        "heart-beat": {
+          "0%, 100%": { transform: "scale(1)" },
+          "25%": { transform: "scale(1.1)" },
+          "50%": { transform: "scale(1)" },
+          "75%": { transform: "scale(1.15)" },
+        },
+        "float-slow": {
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "50%": { transform: "translateY(-20px) rotate(5deg)" },
+        },
+        "float-reverse": {
+          "0%, 100%": { transform: "translateY(0) rotate(0deg)" },
+          "50%": { transform: "translateY(15px) rotate(-5deg)" },
+        },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -125,6 +148,11 @@ export default {
         "slide-in-right": "slide-in-right 0.4s ease-out forwards",
         "scale-in": "scale-in 0.3s ease-out forwards",
         "bounce-in": "bounce-in 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
+        sparkle: "sparkle 2s ease-in-out infinite",
+        "heart-beat": "heart-beat 1.5s ease-in-out infinite",
+        "float-slow": "float-slow 6s ease-in-out infinite",
+        "float-reverse": "float-reverse 7s ease-in-out infinite",
+        wiggle: "wiggle 2s ease-in-out infinite",
       },
     },
   },
