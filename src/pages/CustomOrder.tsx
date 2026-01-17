@@ -5,8 +5,8 @@ import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Cart from '@/components/Cart';
-
 import Chatbot from '@/components/Chatbot';
+import { customOrderSchema, sanitizeText, type CustomOrderFormData } from '@/lib/validations';
 
 const CustomOrder = () => {
   const { toast } = useToast();
@@ -20,6 +20,7 @@ const CustomOrder = () => {
     message: '',
     budget: '',
   });
+  const [errors, setErrors] = useState<Partial<Record<keyof CustomOrderFormData, string>>>({});
 
   const occasions = [
     'Birthday',
@@ -42,14 +43,48 @@ const CustomOrder = () => {
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    // Clear error when user starts typing
+    if (errors[name as keyof CustomOrderFormData]) {
+      setErrors({ ...errors, [name]: undefined });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+    
+    // Validate form data using zod
+    const result = customOrderSchema.safeParse(formData);
+    
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof CustomOrderFormData, string>> = {};
+      result.error.errors.forEach((error) => {
+        const field = error.path[0] as keyof CustomOrderFormData;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = error.message;
+        }
+      });
+      setErrors(fieldErrors);
+      toast({
+        title: "Please fix the errors",
+        description: "Some fields need your attention.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Sanitize validated data
+    const sanitizedData = {
+      ...result.data,
+      name: sanitizeText(result.data.name),
+      message: sanitizeText(result.data.message),
+    };
+
     setIsSubmitting(true);
 
-    // Simulate API call
+    // Simulate API call (in a real app, this would send sanitizedData to the server)
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
     setIsSubmitting(false);
@@ -128,7 +163,7 @@ const CustomOrder = () => {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="card-soft p-6 md:p-8 space-y-6">
+          <form onSubmit={handleSubmit} className="card-soft p-6 md:p-8 space-y-6" noValidate>
             {/* Name */}
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -140,10 +175,15 @@ const CustomOrder = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                required
                 placeholder="Enter your name"
-                className="input-soft"
+                maxLength={100}
+                className={`input-soft ${errors.name ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? 'name-error' : undefined}
               />
+              {errors.name && (
+                <p id="name-error" className="text-sm text-destructive mt-1">{errors.name}</p>
+              )}
             </div>
 
             {/* Phone */}
@@ -157,10 +197,15 @@ const CustomOrder = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                required
-                placeholder="Enter your phone number"
-                className="input-soft"
+                placeholder="Enter your 10-digit phone number"
+                maxLength={13}
+                className={`input-soft ${errors.phone ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? 'phone-error' : undefined}
               />
+              {errors.phone && (
+                <p id="phone-error" className="text-sm text-destructive mt-1">{errors.phone}</p>
+              )}
             </div>
 
             {/* Occasion */}
@@ -173,8 +218,9 @@ const CustomOrder = () => {
                 name="occasion"
                 value={formData.occasion}
                 onChange={handleChange}
-                required
-                className="input-soft cursor-pointer"
+                className={`input-soft cursor-pointer ${errors.occasion ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                aria-invalid={!!errors.occasion}
+                aria-describedby={errors.occasion ? 'occasion-error' : undefined}
               >
                 <option value="">Select an occasion</option>
                 {occasions.map((occ) => (
@@ -183,6 +229,9 @@ const CustomOrder = () => {
                   </option>
                 ))}
               </select>
+              {errors.occasion && (
+                <p id="occasion-error" className="text-sm text-destructive mt-1">{errors.occasion}</p>
+              )}
             </div>
 
             {/* Budget */}
@@ -195,8 +244,9 @@ const CustomOrder = () => {
                 name="budget"
                 value={formData.budget}
                 onChange={handleChange}
-                required
-                className="input-soft cursor-pointer"
+                className={`input-soft cursor-pointer ${errors.budget ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                aria-invalid={!!errors.budget}
+                aria-describedby={errors.budget ? 'budget-error' : undefined}
               >
                 <option value="">Select your budget</option>
                 {budgetRanges.map((range) => (
@@ -205,6 +255,9 @@ const CustomOrder = () => {
                   </option>
                 ))}
               </select>
+              {errors.budget && (
+                <p id="budget-error" className="text-sm text-destructive mt-1">{errors.budget}</p>
+              )}
             </div>
 
             {/* Custom Message */}
@@ -218,9 +271,16 @@ const CustomOrder = () => {
                 value={formData.message}
                 onChange={handleChange}
                 rows={4}
+                maxLength={1000}
                 placeholder="Tell us about your gift idea, any special requests, colors, themes, or messages you'd like to include..."
-                className="input-soft resize-none"
+                className={`input-soft resize-none ${errors.message ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                aria-invalid={!!errors.message}
+                aria-describedby={errors.message ? 'message-error' : undefined}
               />
+              {errors.message && (
+                <p id="message-error" className="text-sm text-destructive mt-1">{errors.message}</p>
+              )}
+              <p className="text-xs text-muted-foreground mt-1">{formData.message.length}/1000 characters</p>
             </div>
 
             {/* Submit Button */}

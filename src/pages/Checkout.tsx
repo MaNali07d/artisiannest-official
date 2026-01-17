@@ -6,8 +6,8 @@ import { useToast } from '@/hooks/use-toast';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import Cart from '@/components/Cart';
-
 import Chatbot from '@/components/Chatbot';
+import { checkoutSchema, sanitizeText, type CheckoutFormData } from '@/lib/validations';
 
 const Checkout = () => {
   const { items, totalPrice, clearCart } = useCart();
@@ -27,16 +27,54 @@ const Checkout = () => {
     pincode: '',
     notes: '',
   });
+  const [errors, setErrors] = useState<Partial<Record<keyof CheckoutFormData, string>>>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    // Clear error when user starts typing
+    if (errors[name as keyof CheckoutFormData]) {
+      setErrors({ ...errors, [name]: undefined });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+
+    // Validate form data using zod
+    const result = checkoutSchema.safeParse(formData);
+
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof CheckoutFormData, string>> = {};
+      result.error.errors.forEach((error) => {
+        const field = error.path[0] as keyof CheckoutFormData;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = error.message;
+        }
+      });
+      setErrors(fieldErrors);
+      toast({
+        title: "Please fix the errors",
+        description: "Some fields need your attention.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Sanitize validated data
+    const sanitizedData = {
+      ...result.data,
+      fullName: sanitizeText(result.data.fullName),
+      address: sanitizeText(result.data.address),
+      city: sanitizeText(result.data.city),
+      state: sanitizeText(result.data.state),
+      notes: sanitizeText(result.data.notes),
+    };
+
     setIsSubmitting(true);
 
-    // Simulate API call
+    // Simulate API call (in a real app, this would send sanitizedData to the server)
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const newOrderNumber = `AN${Date.now().toString().slice(-8)}`;
@@ -134,7 +172,7 @@ const Checkout = () => {
           <div className="grid lg:grid-cols-5 gap-8">
             {/* Form Section */}
             <div className="lg:col-span-3">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form id="checkout-form" onSubmit={handleSubmit} className="space-y-6" noValidate>
                 {/* Delivery Details */}
                 <div className="card-soft p-6">
                   <h2 className="flex items-center gap-2 text-lg font-bold mb-4">
@@ -154,10 +192,15 @@ const Checkout = () => {
                           name="fullName"
                           value={formData.fullName}
                           onChange={handleChange}
-                          required
                           placeholder="Enter your full name"
-                          className="input-soft"
+                          maxLength={100}
+                          className={`input-soft ${errors.fullName ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                          aria-invalid={!!errors.fullName}
+                          aria-describedby={errors.fullName ? 'fullName-error' : undefined}
                         />
+                        {errors.fullName && (
+                          <p id="fullName-error" className="text-sm text-destructive mt-1">{errors.fullName}</p>
+                        )}
                       </div>
                       <div>
                         <label htmlFor="phone" className="block text-sm font-medium mb-2">
@@ -169,10 +212,15 @@ const Checkout = () => {
                           name="phone"
                           value={formData.phone}
                           onChange={handleChange}
-                          required
-                          placeholder="Enter phone number"
-                          className="input-soft"
+                          placeholder="Enter 10-digit phone number"
+                          maxLength={13}
+                          className={`input-soft ${errors.phone ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                          aria-invalid={!!errors.phone}
+                          aria-describedby={errors.phone ? 'phone-error' : undefined}
                         />
+                        {errors.phone && (
+                          <p id="phone-error" className="text-sm text-destructive mt-1">{errors.phone}</p>
+                        )}
                       </div>
                     </div>
 
@@ -187,8 +235,14 @@ const Checkout = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="Enter your email"
-                        className="input-soft"
+                        maxLength={255}
+                        className={`input-soft ${errors.email ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                        aria-invalid={!!errors.email}
+                        aria-describedby={errors.email ? 'email-error' : undefined}
                       />
+                      {errors.email && (
+                        <p id="email-error" className="text-sm text-destructive mt-1">{errors.email}</p>
+                      )}
                     </div>
 
                     <div>
@@ -200,11 +254,16 @@ const Checkout = () => {
                         name="address"
                         value={formData.address}
                         onChange={handleChange}
-                        required
                         rows={2}
+                        maxLength={500}
                         placeholder="House/Flat No., Street, Landmark"
-                        className="input-soft resize-none"
+                        className={`input-soft resize-none ${errors.address ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                        aria-invalid={!!errors.address}
+                        aria-describedby={errors.address ? 'address-error' : undefined}
                       />
+                      {errors.address && (
+                        <p id="address-error" className="text-sm text-destructive mt-1">{errors.address}</p>
+                      )}
                     </div>
 
                     <div className="grid sm:grid-cols-3 gap-4">
@@ -218,10 +277,15 @@ const Checkout = () => {
                           name="city"
                           value={formData.city}
                           onChange={handleChange}
-                          required
                           placeholder="City"
-                          className="input-soft"
+                          maxLength={100}
+                          className={`input-soft ${errors.city ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                          aria-invalid={!!errors.city}
+                          aria-describedby={errors.city ? 'city-error' : undefined}
                         />
+                        {errors.city && (
+                          <p id="city-error" className="text-sm text-destructive mt-1">{errors.city}</p>
+                        )}
                       </div>
                       <div>
                         <label htmlFor="state" className="block text-sm font-medium mb-2">
@@ -233,10 +297,15 @@ const Checkout = () => {
                           name="state"
                           value={formData.state}
                           onChange={handleChange}
-                          required
                           placeholder="State"
-                          className="input-soft"
+                          maxLength={100}
+                          className={`input-soft ${errors.state ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                          aria-invalid={!!errors.state}
+                          aria-describedby={errors.state ? 'state-error' : undefined}
                         />
+                        {errors.state && (
+                          <p id="state-error" className="text-sm text-destructive mt-1">{errors.state}</p>
+                        )}
                       </div>
                       <div>
                         <label htmlFor="pincode" className="block text-sm font-medium mb-2">
@@ -248,10 +317,15 @@ const Checkout = () => {
                           name="pincode"
                           value={formData.pincode}
                           onChange={handleChange}
-                          required
-                          placeholder="Pincode"
-                          className="input-soft"
+                          placeholder="6-digit pincode"
+                          maxLength={6}
+                          className={`input-soft ${errors.pincode ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                          aria-invalid={!!errors.pincode}
+                          aria-describedby={errors.pincode ? 'pincode-error' : undefined}
                         />
+                        {errors.pincode && (
+                          <p id="pincode-error" className="text-sm text-destructive mt-1">{errors.pincode}</p>
+                        )}
                       </div>
                     </div>
 
@@ -265,9 +339,15 @@ const Checkout = () => {
                         value={formData.notes}
                         onChange={handleChange}
                         rows={2}
+                        maxLength={500}
                         placeholder="Any special instructions for delivery..."
-                        className="input-soft resize-none"
+                        className={`input-soft resize-none ${errors.notes ? 'border-destructive focus:ring-destructive/30' : ''}`}
+                        aria-invalid={!!errors.notes}
+                        aria-describedby={errors.notes ? 'notes-error' : undefined}
                       />
+                      {errors.notes && (
+                        <p id="notes-error" className="text-sm text-destructive mt-1">{errors.notes}</p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -354,7 +434,6 @@ const Checkout = () => {
                   type="submit"
                   form="checkout-form"
                   disabled={isSubmitting}
-                  onClick={handleSubmit}
                   className="hidden lg:flex btn-primary w-full items-center justify-center gap-2 py-4 mt-6"
                 >
                   {isSubmitting ? (
