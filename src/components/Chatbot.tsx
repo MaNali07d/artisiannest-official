@@ -26,7 +26,9 @@ const initialQuickReplies: QuickReply[] = [
   { label: '💕 Anniversary Love', icon: '💕', action: 'anniversary' },
   { label: '✨ Make it Custom', icon: '✨', action: 'custom' },
   { label: '🛒 My Cart', icon: '🛒', action: 'cart' },
-  { label: '💬 Chat on WhatsApp', icon: '💬', action: 'whatsapp' },
+  { label: '💬 WhatsApp', icon: '💬', action: 'whatsapp' },
+  { label: '📸 Instagram', icon: '📸', action: 'instagram' },
+  { label: '📧 Email', icon: '📧', action: 'email' },
 ];
 
 const botResponses: Record<string, { text: string; quickReplies?: QuickReply[] }> = {
@@ -68,6 +70,14 @@ const botResponses: Record<string, { text: string; quickReplies?: QuickReply[] }
     text: "Sure thing! 💚\n\nI'm opening WhatsApp for you now. Our team loves chatting and will help you find the perfect gift!\n\nTalk soon! 🌸",
     quickReplies: initialQuickReplies,
   },
+  instagram: {
+    text: "Opening Instagram! 📸\n\nFollow us @artisiannest for daily inspiration, behind-the-scenes, and new arrivals!\n\nSee you there! 🌸",
+    quickReplies: initialQuickReplies,
+  },
+  email: {
+    text: "Opening your email app! 📧\n\nFeel free to write to us at artisiannest@gmail.com - we'd love to hear from you!\n\n💖",
+    quickReplies: initialQuickReplies,
+  },
   prices: {
     text: "Here are our lovely options! 🏷️\n\n🎁 Mini Gift Hamper - ₹599\n🎨 Hand Painted Mug - ₹299\n💌 Greeting Cards (Set of 3) - ₹399\n🎂 Birthday Hamper - ₹1299\n💕 Anniversary Set - ₹1499\n🌸 Custom Flowers - ₹350\n\nAnything catch your eye? 😊",
     quickReplies: initialQuickReplies,
@@ -75,12 +85,12 @@ const botResponses: Record<string, { text: string; quickReplies?: QuickReply[] }
   delivery: {
     text: "Great question! 📦\n\nWe deliver all over India! Most orders are shipped within 2-3 days.\n\nFor exact delivery times to your location, just message us on WhatsApp! 💚",
     quickReplies: [
-      { label: '💬 Chat on WhatsApp', icon: '💬', action: 'whatsapp' },
+      { label: '💬 WhatsApp', icon: '💬', action: 'whatsapp' },
       { label: '🛒 My Cart', icon: '🛒', action: 'cart' },
     ],
   },
   help: {
-    text: "I'm here to help! 🤗\n\nYou can ask me about:\n• 🎁 Gift suggestions\n• 💰 Prices\n• 📦 Delivery\n• ✨ Custom orders\n\nOr we can chat on WhatsApp anytime! 💚",
+    text: "I'm here to help! 🤗\n\nYou can ask me about:\n• 🎁 Gift suggestions\n• 💰 Prices\n• 📦 Delivery\n• ✨ Custom orders\n\nOr reach us on WhatsApp, Instagram or Email! 💚",
     quickReplies: initialQuickReplies,
   },
   shopping: {
@@ -246,13 +256,27 @@ const Chatbot = () => {
         setTimeout(() => setIsCartOpen(true), 500);
         break;
       case 'whatsapp':
-        userMessage = '💬 Chat on WhatsApp';
+        userMessage = '💬 WhatsApp';
         botResponse = botResponses.whatsapp;
         setTimeout(() => {
           window.open(
             `https://wa.me/918104896311?text=${encodeURIComponent("Hi Artisiannest, I'm interested in your handmade gifts.")}`,
             '_blank'
           );
+        }, 500);
+        break;
+      case 'instagram':
+        userMessage = '📸 Instagram';
+        botResponse = botResponses.instagram;
+        setTimeout(() => {
+          window.open('https://instagram.com/artisiannest', '_blank');
+        }, 500);
+        break;
+      case 'email':
+        userMessage = '📧 Email';
+        botResponse = botResponses.email;
+        setTimeout(() => {
+          window.open('mailto:artisiannest@gmail.com', '_blank');
         }, 500);
         break;
       case 'navigate_custom':
