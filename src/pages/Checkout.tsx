@@ -405,7 +405,7 @@ ${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
                         💳 <strong>Online Payment</strong> - Pay after order confirmation
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
-                        UPI / Card payment link will be shared on WhatsApp after order confirmation
+                        Google Pay / UPI payment link will be shared on WhatsApp after order confirmation
                       </p>
                     </div>
                   </div>
