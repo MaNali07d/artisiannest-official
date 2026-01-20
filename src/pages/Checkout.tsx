@@ -75,10 +75,43 @@ const Checkout = () => {
     setIsSubmitting(true);
 
     // Simulate API call (in a real app, this would send sanitizedData to the server)
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
     const newOrderNumber = `AN${Date.now().toString().slice(-8)}`;
     setOrderNumber(newOrderNumber);
+
+    // Build WhatsApp message with order details
+    const itemsList = items
+      .map((item) => `• ${item.name} (Qty: ${item.quantity}) - ₹${(item.price * item.quantity).toLocaleString('en-IN')}`)
+      .join('\n');
+
+    const whatsappMessage = `🛒 *NEW ORDER RECEIVED*
+
+*Order ID:* #${newOrderNumber}
+
+*Customer Details:*
+👤 Name: ${sanitizedData.fullName}
+📱 Phone: ${sanitizedData.phone}
+${sanitizedData.email ? `📧 Email: ${sanitizedData.email}` : ''}
+
+*Delivery Address:*
+📍 ${sanitizedData.address}
+${sanitizedData.city}, ${sanitizedData.state} - ${sanitizedData.pincode}
+
+*Order Items:*
+${itemsList}
+
+💰 *Total: ₹${totalPrice.toLocaleString('en-IN')}*
+💵 *Payment: Cash on Delivery*
+
+${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
+
+    // Open WhatsApp with pre-filled message
+    window.open(
+      `https://wa.me/918104896311?text=${encodeURIComponent(whatsappMessage)}`,
+      '_blank'
+    );
+
     setIsSubmitting(false);
     setIsOrderPlaced(true);
     clearCart();
