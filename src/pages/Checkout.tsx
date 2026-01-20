@@ -389,15 +389,25 @@ ${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
                 <div className="card-soft p-6">
                   <h2 className="flex items-center gap-2 text-lg font-bold mb-4">
                     <CreditCard className="w-5 h-5 text-primary" />
-                    Payment
+                    Payment Options
                   </h2>
-                  <div className="p-4 bg-mint/30 rounded-xl">
-                    <p className="text-sm text-foreground">
-                      💚 <strong>Cash on Delivery</strong> - Pay when you receive your order
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-2">
-                      Online payment options coming soon!
-                    </p>
+                  <div className="space-y-3">
+                    {/* Cash on Delivery */}
+                    <div className="p-4 bg-mint/30 rounded-xl border-2 border-primary">
+                      <p className="text-sm text-foreground">
+                        💚 <strong>Cash on Delivery</strong> - Pay when you receive + extra delivery charges
+                      </p>
+                    </div>
+                    
+                    {/* Online Payment */}
+                    <div className="p-4 bg-lavender/30 rounded-xl">
+                      <p className="text-sm text-foreground">
+                        💳 <strong>Online Payment</strong> - Pay after order confirmation
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        UPI / Card payment link will be shared on WhatsApp after order confirmation
+                      </p>
+                    </div>
                   </div>
                 </div>
 
