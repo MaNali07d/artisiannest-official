@@ -1,4 +1,4 @@
-import { Heart, Instagram, MessageCircle, Globe } from 'lucide-react';
+import { Heart, Instagram, MessageCircle, Mail } from 'lucide-react';
 
 const Footer = () => {
   const whatsappNumber = '918104896311';
@@ -104,11 +104,11 @@ const Footer = () => {
             <span>8104896311</span>
           </a>
           <a
-            href="/"
+            href="mailto:artisiannest@gmail.com"
             className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors group"
           >
-            <Globe size={18} className="group-hover:animate-wiggle" />
-            <span>artisiannest.com</span>
+            <Mail size={18} className="group-hover:animate-wiggle" />
+            <span>artisiannest@gmail.com</span>
           </a>
         </div>
 

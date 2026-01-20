@@ -84,15 +84,25 @@ const CustomOrder = () => {
 
     setIsSubmitting(true);
 
-    // Simulate API call (in a real app, this would send sanitizedData to the server)
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    // Build WhatsApp message with form data
+    const whatsappMessage = `🎁 *New Custom Order Request*
+
+👤 *Name:* ${sanitizedData.name}
+📞 *Phone:* ${sanitizedData.phone}
+🎉 *Occasion:* ${sanitizedData.occasion}
+💰 *Budget:* ${sanitizedData.budget}
+${sanitizedData.message ? `\n💬 *Message:* ${sanitizedData.message}` : ''}`;
+
+    // Open WhatsApp with the order details
+    const whatsappUrl = `https://wa.me/918104896311?text=${encodeURIComponent(whatsappMessage)}`;
+    window.open(whatsappUrl, '_blank');
 
     setIsSubmitting(false);
     setIsSubmitted(true);
 
     toast({
-      title: "Order Received! 🎉",
-      description: "We'll contact you shortly to discuss your custom gift.",
+      title: "Order Sent to WhatsApp! 🎉",
+      description: "Complete the order by sending the message on WhatsApp.",
     });
   };
 
