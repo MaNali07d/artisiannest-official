@@ -1,4 +1,7 @@
 import { Product } from '@/contexts/CartContext';
+import weddingRukhwat1 from '@/assets/wedding-rukhwat-1.jpeg';
+import weddingRukhwat2 from '@/assets/wedding-rukhwat-2.jpeg';
+import weddingRukhwat3 from '@/assets/wedding-rukhwat-3.png';
 
 export const products: Product[] = [
   {
@@ -29,7 +32,8 @@ export const products: Product[] = [
     id: 5,
     name: 'Wedding Rukhwat',
     price: 1999,
-    image: 'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=400&h=400&fit=crop',
+    image: weddingRukhwat1,
+    images: [weddingRukhwat1, weddingRukhwat2, weddingRukhwat3],
   },
   {
     id: 6,
@@ -42,5 +46,11 @@ export const products: Product[] = [
     name: 'Customize Flowers Bouquet',
     price: 499,
     image: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=400&h=400&fit=crop',
+  },
+  {
+    id: 8,
+    name: 'Wedding Ceremonial Cloth',
+    price: 499,
+    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop',
   },
 ];
