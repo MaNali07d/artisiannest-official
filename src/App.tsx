@@ -17,7 +17,7 @@ import CustomOrder from "./pages/CustomOrder";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
