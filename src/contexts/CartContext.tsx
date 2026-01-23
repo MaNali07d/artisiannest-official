@@ -1,12 +1,7 @@
 import React, { createContext, useContext, useState, useCallback } from 'react';
+import { Product } from '@/data/products';
 
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  images?: string[]; // Support for multiple images
-}
+export type { Product } from '@/data/products';
 
 export interface CartItem extends Product {
   quantity: number;
