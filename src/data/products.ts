@@ -9,24 +9,44 @@ export const products: Product[] = [
     name: 'Handmade Birthday Hamper',
     price: 399,
     image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&h=400&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?w=400&h=400&fit=crop',
+    ],
   },
   {
     id: 2,
     name: 'Personalized Gift Box',
     price: 499,
     image: 'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=400&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1513885535751-8b9238bd345a?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1607469256872-48074e807b0d?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=400&h=400&fit=crop',
+    ],
   },
   {
     id: 3,
     name: 'Custom Greeting Card (Set of 3)',
     price: 299,
     image: 'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=400&h=400&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1607344645866-009c320b63e0?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1606567595334-d39972c85dfd?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1512909006721-3d6018887383?w=400&h=400&fit=crop',
+    ],
   },
   {
     id: 4,
     name: 'Mini Gift Hamper',
     price: 599,
     image: 'https://images.unsplash.com/photo-1512909006721-3d6018887383?w=400&h=400&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1512909006721-3d6018887383?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=400&fit=crop',
+    ],
   },
   {
     id: 5,
@@ -40,17 +60,32 @@ export const products: Product[] = [
     name: 'Anniversary Gift Set',
     price: 599,
     image: 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=400&h=400&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?w=400&h=400&fit=crop',
+    ],
   },
   {
     id: 7,
     name: 'Customize Flowers Bouquet',
     price: 499,
     image: 'https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=400&h=400&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1561181286-d3fee7d55364?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1455659817273-f96807779a8a?w=400&h=400&fit=crop',
+    ],
   },
   {
     id: 8,
     name: 'Wedding Ceremonial Cloth',
     price: 499,
     image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=400&fit=crop',
+      'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&h=400&fit=crop',
+    ],
   },
 ];
