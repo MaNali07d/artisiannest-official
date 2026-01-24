@@ -62,7 +62,7 @@ const Index = () => {
                 <Heart className="w-4 h-4" />
                 Anniversary
               </span>
-              <span className="flex items-center gap-2 px-4 py-2 bg-peach rounded-full text-sm">
+              <span className="flex items-center gap-2 px-4 py-2 bg-lavender rounded-full text-sm">
                 <Sparkles className="w-4 h-4" />
                 Custom Hampers
               </span>
