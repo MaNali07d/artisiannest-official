@@ -457,16 +457,8 @@ ${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
                   ))}
                 </div>
 
-                <div className="border-t border-border pt-4 space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span>₹{totalPrice.toLocaleString('en-IN')}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Delivery</span>
-                    <span className="text-mint font-medium">FREE</span>
-                  </div>
-                  <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
+                <div className="border-t border-border pt-4">
+                  <div className="flex justify-between text-lg font-bold">
                     <span>Total</span>
                     <span className="text-primary">₹{totalPrice.toLocaleString('en-IN')}</span>
                   </div>
