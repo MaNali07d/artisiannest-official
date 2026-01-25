@@ -109,7 +109,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
           </h3>
           <div className="flex items-center justify-between gap-2">
             <p className="text-lg md:text-xl font-bold text-primary">
-              ₹{product.price.toLocaleString('en-IN')}
+              {product.priceLabel ? product.priceLabel : `₹${product.price.toLocaleString('en-IN')}`}
             </p>
             <button
               onClick={handleAddToCart}

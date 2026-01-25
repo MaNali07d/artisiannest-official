@@ -3,13 +3,21 @@ import personalizedGiftBox from '@/assets/personalized-gift-box.png';
 import customGreetingCards from '@/assets/custom-greeting-cards.png';
 import miniGiftHamper from '@/assets/mini-gift-hamper.png';
 import weddingRukhwat from '@/assets/wedding-rukhwat.png';
+import weddingRukhwat4 from '@/assets/wedding-rukhwat-4.png';
+import weddingRukhwat5 from '@/assets/wedding-rukhwat-5.png';
+import weddingRukhwat6 from '@/assets/wedding-rukhwat-6.png';
+import weddingRukhwat7 from '@/assets/wedding-rukhwat-7.png';
 import customizeFlowers from '@/assets/customize-flowers.png';
 import weddingCeremonialCloth from '@/assets/wedding-ceremonial-cloth.png';
+import weddingCeremonialCloth2 from '@/assets/wedding-ceremonial-cloth-2.png';
+import weddingPlatter1 from '@/assets/wedding-platter-1.png';
+import weddingPlatter2 from '@/assets/wedding-platter-2.png';
 
 export interface Product {
   id: number;
   name: string;
   price: number;
+  priceLabel?: string;
   image: string;
   images?: string[];
   description?: string;
@@ -82,7 +90,7 @@ export const products: Product[] = [
     name: 'Wedding Rukhwat',
     price: 1999,
     image: weddingRukhwat,
-    images: [weddingRukhwat],
+    images: [weddingRukhwat, weddingRukhwat4, weddingRukhwat5, weddingRukhwat6, weddingRukhwat7],
     description: 'Traditional wedding rukhwat set with exquisite decorations and premium quality items.',
     details: [
       'Traditional handcrafted design',
@@ -112,7 +120,7 @@ export const products: Product[] = [
     name: 'Wedding Ceremonial Cloth',
     price: 499,
     image: weddingCeremonialCloth,
-    images: [weddingCeremonialCloth],
+    images: [weddingCeremonialCloth, weddingCeremonialCloth2],
     description: 'Traditional ceremonial cloth for wedding rituals, crafted with intricate designs and premium fabric.',
     details: [
       'Premium quality fabric',
@@ -120,6 +128,22 @@ export const products: Product[] = [
       'Multiple color options',
       'Suitable for all ceremonies',
       'Gift packaging included',
+    ],
+  },
+  {
+    id: 8,
+    name: 'Wedding Customize Platters',
+    price: 0,
+    priceLabel: 'Price based on customization',
+    image: weddingPlatter1,
+    images: [weddingPlatter1, weddingPlatter2],
+    description: 'Beautifully decorated wedding platters customized to match your ceremony theme and requirements.',
+    details: [
+      'Fully customizable designs',
+      'Premium decorative elements',
+      'Available for all ceremonies (Haldi, Ring, Mehendi)',
+      'Handcrafted with love',
+      'Contact us for pricing',
     ],
   },
 ];
