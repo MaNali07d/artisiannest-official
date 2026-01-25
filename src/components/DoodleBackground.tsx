@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 interface DoodleElement {
   id: number;
-  type: 'heart' | 'star' | 'circle' | 'swirl';
+  type: 'heart' | 'circle' | 'swirl';
   x: number;
   y: number;
   size: number;
@@ -21,11 +21,9 @@ const DoodleBackground = () => {
 
   const doodles: DoodleElement[] = [
     { id: 1, type: 'heart', x: 5, y: 10, size: 20, rotation: 15, delay: 0 },
-    { id: 2, type: 'star', x: 90, y: 15, size: 16, rotation: -10, delay: 1 },
     { id: 3, type: 'circle', x: 85, y: 40, size: 12, rotation: 0, delay: 2 },
     { id: 4, type: 'heart', x: 10, y: 50, size: 14, rotation: -20, delay: 0.5 },
     { id: 5, type: 'swirl', x: 95, y: 70, size: 18, rotation: 30, delay: 1.5 },
-    { id: 6, type: 'star', x: 3, y: 80, size: 14, rotation: 45, delay: 2.5 },
     { id: 7, type: 'heart', x: 92, y: 90, size: 16, rotation: -15, delay: 0.8 },
     { id: 8, type: 'circle', x: 8, y: 30, size: 10, rotation: 0, delay: 1.2 },
   ];
@@ -55,25 +53,6 @@ const DoodleBackground = () => {
             <path
               className="text-accent"
               d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-            />
-          </svg>
-        );
-      case 'star':
-        return (
-          <svg
-            key={doodle.id}
-            className="absolute opacity-[0.12] animate-float-reverse pointer-events-none"
-            style={style}
-            width={doodle.size}
-            height={doodle.size}
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path
-              className="text-coral"
-              d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
             />
           </svg>
         );
