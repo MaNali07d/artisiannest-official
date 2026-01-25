@@ -43,11 +43,11 @@ const ProductDetailModal = ({ product, isOpen, onClose }: ProductDetailModalProp
         
         <div className="grid md:grid-cols-2 gap-0">
           {/* Image Gallery */}
-          <div className="relative aspect-square bg-muted">
+          <div className="relative bg-muted flex items-center justify-center min-h-[300px] md:min-h-[400px]">
             <img
               src={images[currentImageIndex]}
               alt={product.name}
-              className="w-full h-full object-cover"
+              className="w-full h-auto max-h-[500px] object-contain"
             />
             
             {/* Navigation Arrows */}
@@ -117,7 +117,7 @@ const ProductDetailModal = ({ product, isOpen, onClose }: ProductDetailModalProp
             </h2>
             
             <p className="text-3xl font-bold text-primary mb-4">
-              ₹{product.price.toLocaleString('en-IN')}
+              {product.priceLabel ? product.priceLabel : `₹${product.price.toLocaleString('en-IN')}`}
             </p>
 
             {product.description && (
