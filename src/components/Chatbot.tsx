@@ -24,6 +24,7 @@ interface Position {
 const initialQuickReplies: QuickReply[] = [
   { label: '🎂 Birthday Surprise', icon: '🎂', action: 'birthday' },
   { label: '💕 Anniversary Love', icon: '💕', action: 'anniversary' },
+  { label: '💒 Wedding Gifts', icon: '💒', action: 'wedding' },
   { label: '✨ Make it Custom', icon: '✨', action: 'custom' },
   { label: '🛒 My Cart', icon: '🛒', action: 'cart' },
   { label: '💬 WhatsApp', icon: '💬', action: 'whatsapp' },
@@ -50,6 +51,14 @@ const botResponses: Record<string, { text: string; quickReplies?: QuickReply[] }
       { label: '✨ Make it Custom', icon: '✨', action: 'custom' },
       { label: '🛒 View Cart', icon: '🛒', action: 'cart' },
       { label: '💬 Chat on WhatsApp', icon: '💬', action: 'whatsapp' },
+    ],
+  },
+  wedding: {
+    text: "Wedding shopping! How exciting! 💒✨\n\nWe have beautiful items for your special day:\n\n💍 Wedding Rukhwat - ₹1999\n👘 Wedding Ceremonial Cloth - ₹499\n🍽️ Wedding Customize Platters - Custom Price\n\n📅 Please order wedding items a month in advance!\n\nWant something personalized? Let's chat! 💝",
+    quickReplies: [
+      { label: '✨ Make it Custom', icon: '✨', action: 'custom' },
+      { label: '💬 Chat on WhatsApp', icon: '💬', action: 'whatsapp' },
+      { label: '🛒 View Cart', icon: '🛒', action: 'cart' },
     ],
   },
   custom: {
@@ -246,6 +255,10 @@ const Chatbot = () => {
         userMessage = '💕 Anniversary Love';
         botResponse = botResponses.anniversary;
         break;
+      case 'wedding':
+        userMessage = '💒 Wedding Gifts';
+        botResponse = botResponses.wedding;
+        break;
       case 'custom':
         userMessage = '✨ Make it Custom';
         botResponse = botResponses.custom;
@@ -323,6 +336,8 @@ const Chatbot = () => {
       response = botResponses.birthday;
     } else if (userText.includes('anniversary') || userText.includes('anniv')) {
       response = botResponses.anniversary;
+    } else if (userText.includes('wedding') || userText.includes('rukhwat') || userText.includes('platter') || userText.includes('ceremonial')) {
+      response = botResponses.wedding;
     } else if (userText.includes('custom') || userText.includes('personalize')) {
       response = botResponses.custom;
     } else if (userText.includes('price') || userText.includes('cost') || userText.includes('how much')) {
