@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { ShoppingBag, Check, ChevronLeft, ChevronRight, X } from 'lucide-react';
-import { useState } from 'react';
+import { ShoppingBag, Check, ChevronLeft, ChevronRight, ZoomIn, ZoomOut, X } from 'lucide-react';
+import { useState, useRef } from 'react';
 import { Product } from '@/data/products';
 import { useCart } from '@/contexts/CartContext';
 
@@ -14,6 +14,9 @@ const ProductDetailModal = ({ product, isOpen, onClose }: ProductDetailModalProp
   const { addToCart } = useCart();
   const [isAdded, setIsAdded] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
+  const imageContainerRef = useRef<HTMLDivElement>(null);
 
   if (!product) return null;
 
@@ -28,10 +31,31 @@ const ProductDetailModal = ({ product, isOpen, onClose }: ProductDetailModalProp
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % images.length);
+    setIsZoomed(false);
   };
 
   const prevImage = () => {
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    setIsZoomed(false);
+  };
+
+  const handleImageClick = () => {
+    setIsZoomed(!isZoomed);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isZoomed || !imageContainerRef.current) return;
+    
+    const rect = imageContainerRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setZoomPosition({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    if (isZoomed) {
+      setZoomPosition({ x: 50, y: 50 });
+    }
   };
 
   return (
@@ -43,18 +67,43 @@ const ProductDetailModal = ({ product, isOpen, onClose }: ProductDetailModalProp
         
         <div className="grid md:grid-cols-2 gap-0">
           {/* Image Gallery */}
-          <div className="relative bg-muted flex items-center justify-center min-h-[300px] md:min-h-[400px]">
+          <div 
+            ref={imageContainerRef}
+            className={`relative bg-muted flex items-center justify-center min-h-[300px] md:min-h-[400px] overflow-hidden ${
+              isZoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'
+            }`}
+            onClick={handleImageClick}
+            onMouseMove={handleMouseMove}
+            onMouseLeave={handleMouseLeave}
+          >
             <img
               src={images[currentImageIndex]}
               alt={product.name}
-              className="w-full h-auto max-h-[500px] object-contain"
+              className={`w-full h-auto max-h-[500px] transition-transform duration-300 ${
+                isZoomed 
+                  ? 'scale-[2.5] object-cover' 
+                  : 'object-contain'
+              }`}
+              style={isZoomed ? {
+                transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`
+              } : undefined}
+              draggable={false}
             />
             
+            {/* Zoom Indicator */}
+            <div className="absolute top-3 right-3 bg-background/90 rounded-full p-2 shadow-lg pointer-events-none">
+              {isZoomed ? (
+                <ZoomOut size={18} className="text-foreground" />
+              ) : (
+                <ZoomIn size={18} className="text-foreground" />
+              )}
+            </div>
+            
             {/* Navigation Arrows */}
-            {hasMultipleImages && (
+            {hasMultipleImages && !isZoomed && (
               <>
                 <button
-                  onClick={prevImage}
+                  onClick={(e) => { e.stopPropagation(); prevImage(); }}
                   className="absolute left-3 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background 
                              rounded-full p-2 shadow-lg transition-all duration-200"
                   aria-label="Previous image"
@@ -62,7 +111,7 @@ const ProductDetailModal = ({ product, isOpen, onClose }: ProductDetailModalProp
                   <ChevronLeft size={24} className="text-foreground" />
                 </button>
                 <button
-                  onClick={nextImage}
+                  onClick={(e) => { e.stopPropagation(); nextImage(); }}
                   className="absolute right-3 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background 
                              rounded-full p-2 shadow-lg transition-all duration-200"
                   aria-label="Next image"
@@ -73,12 +122,12 @@ const ProductDetailModal = ({ product, isOpen, onClose }: ProductDetailModalProp
             )}
             
             {/* Image Indicators */}
-            {hasMultipleImages && (
+            {hasMultipleImages && !isZoomed && (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                 {images.map((_, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setCurrentImageIndex(idx)}
+                    onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
                     className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                       idx === currentImageIndex 
                         ? 'bg-primary w-6' 
@@ -91,12 +140,12 @@ const ProductDetailModal = ({ product, isOpen, onClose }: ProductDetailModalProp
             )}
 
             {/* Thumbnail Strip */}
-            {hasMultipleImages && (
+            {hasMultipleImages && !isZoomed && (
               <div className="absolute bottom-14 left-1/2 -translate-x-1/2 flex gap-2 bg-background/80 p-2 rounded-lg">
                 {images.map((img, idx) => (
                   <button
                     key={idx}
-                    onClick={() => setCurrentImageIndex(idx)}
+                    onClick={(e) => { e.stopPropagation(); setCurrentImageIndex(idx); }}
                     className={`w-12 h-12 rounded-md overflow-hidden border-2 transition-all ${
                       idx === currentImageIndex 
                         ? 'border-primary' 
