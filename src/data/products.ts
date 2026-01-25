@@ -134,7 +134,7 @@ export const products: Product[] = [
     id: 8,
     name: 'Wedding Customize Platters',
     price: 0,
-    priceLabel: 'Price based on customization',
+    priceLabel: 'Custom Price',
     image: weddingPlatter1,
     images: [weddingPlatter1, weddingPlatter2],
     description: 'Beautifully decorated wedding platters customized to match your ceremony theme and requirements.',
