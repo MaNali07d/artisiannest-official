@@ -79,7 +79,7 @@ const botResponses: Record<string, { text: string; quickReplies?: QuickReply[] }
     quickReplies: initialQuickReplies,
   },
   prices: {
-    text: "Here are our lovely options! 🏷️\n\n🎁 Mini Gift Hamper - ₹599\n🎨 Hand Painted Mug - ₹299\n💌 Greeting Cards (Set of 3) - ₹399\n🎂 Birthday Hamper - ₹1299\n💕 Anniversary Set - ₹1499\n🌸 Custom Flowers - ₹350\n\nAnything catch your eye? 😊",
+    text: "Here are our lovely options! 🏷️\n\n🎂 Handmade Birthday Hamper - ₹399\n🎁 Personalized Gift Box - ₹499\n💌 Custom Greeting Cards (Set of 3) - ₹299\n🧺 Mini Gift Hamper - ₹599\n💍 Wedding Rukhwat - ₹1999\n🌸 Customize Flowers Bouquet - ₹499\n👘 Wedding Ceremonial Cloth - ₹499\n🍽️ Wedding Customize Platters - Custom Price\n\nAnything catch your eye? 😊",
     quickReplies: initialQuickReplies,
   },
   delivery: {
