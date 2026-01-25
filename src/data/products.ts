@@ -1,20 +1,13 @@
-import handmadeBirthdayHamper from '@/assets/handmade-birthday-hamper.png';
 import handmadeBirthdayHamperNew from '@/assets/handmade-birthday-hamper-new.png';
-import personalizedGiftBox from '@/assets/personalized-gift-box.png';
 import personalizedGiftBoxNew from '@/assets/personalized-gift-box-new.png';
-import customGreetingCards from '@/assets/custom-greeting-cards.png';
 import customGreetingCardsNew from '@/assets/custom-greeting-cards-new.png';
-import miniGiftHamper from '@/assets/mini-gift-hamper.png';
 import miniGiftHamperNew from '@/assets/mini-gift-hamper-new.png';
-import weddingRukhwat from '@/assets/wedding-rukhwat.png';
 import weddingRukhwatNew from '@/assets/wedding-rukhwat-new.png';
 import weddingRukhwat4 from '@/assets/wedding-rukhwat-4.png';
 import weddingRukhwat5 from '@/assets/wedding-rukhwat-5.png';
 import weddingRukhwat6 from '@/assets/wedding-rukhwat-6.png';
 import weddingRukhwat7 from '@/assets/wedding-rukhwat-7.png';
-import customizeFlowers from '@/assets/customize-flowers.png';
 import customizeFlowersNew from '@/assets/customize-flowers-new.png';
-import weddingCeremonialCloth from '@/assets/wedding-ceremonial-cloth.png';
 import weddingCeremonialClothNew from '@/assets/wedding-ceremonial-cloth-new.png';
 import weddingCeremonialCloth2 from '@/assets/wedding-ceremonial-cloth-2.png';
 import weddingPlatter1 from '@/assets/wedding-platter-1.png';
@@ -37,7 +30,7 @@ export const products: Product[] = [
     name: 'Handmade Birthday Hamper',
     price: 399,
     image: handmadeBirthdayHamperNew,
-    images: [handmadeBirthdayHamperNew, handmadeBirthdayHamper],
+    images: [handmadeBirthdayHamperNew],
     description: 'A beautifully curated birthday hamper filled with handpicked goodies, wrapped with love and care.',
     details: [
       'Handcrafted with premium materials',
@@ -52,7 +45,7 @@ export const products: Product[] = [
     name: 'Personalized Gift Box',
     price: 499,
     image: personalizedGiftBoxNew,
-    images: [personalizedGiftBoxNew, personalizedGiftBox],
+    images: [personalizedGiftBoxNew],
     description: 'A customizable gift box that can be tailored to your loved ones preferences and interests.',
     details: [
       'Fully customizable contents',
@@ -67,7 +60,7 @@ export const products: Product[] = [
     name: 'Custom Greeting Card (Set of 3)',
     price: 299,
     image: customGreetingCardsNew,
-    images: [customGreetingCardsNew, customGreetingCards],
+    images: [customGreetingCardsNew],
     description: 'Set of 3 beautifully designed greeting cards with custom messages for any occasion.',
     details: [
       'Set of 3 unique designs',
@@ -82,7 +75,7 @@ export const products: Product[] = [
     name: 'Mini Gift Hamper',
     price: 599,
     image: miniGiftHamperNew,
-    images: [miniGiftHamperNew, miniGiftHamper],
+    images: [miniGiftHamperNew],
     description: 'A compact yet delightful hamper perfect for small celebrations and thoughtful gestures.',
     details: [
       'Compact and elegant design',
@@ -97,7 +90,7 @@ export const products: Product[] = [
     name: 'Wedding Rukhwat',
     price: 1999,
     image: weddingRukhwatNew,
-    images: [weddingRukhwatNew, weddingRukhwat, weddingRukhwat4, weddingRukhwat5, weddingRukhwat6, weddingRukhwat7],
+    images: [weddingRukhwatNew, weddingRukhwat4, weddingRukhwat5, weddingRukhwat6, weddingRukhwat7],
     description: 'Traditional wedding rukhwat set with exquisite decorations and premium quality items.',
     details: [
       'Traditional handcrafted design',
@@ -112,7 +105,7 @@ export const products: Product[] = [
     name: 'Customize Flowers Bouquet',
     price: 499,
     image: customizeFlowersNew,
-    images: [customizeFlowersNew, customizeFlowers],
+    images: [customizeFlowersNew],
     description: 'Fresh, handpicked flowers arranged in a stunning customizable bouquet for any occasion.',
     details: [
       'Fresh flowers daily',
@@ -127,7 +120,7 @@ export const products: Product[] = [
     name: 'Wedding Ceremonial Cloth',
     price: 499,
     image: weddingCeremonialClothNew,
-    images: [weddingCeremonialClothNew, weddingCeremonialCloth, weddingCeremonialCloth2],
+    images: [weddingCeremonialClothNew, weddingCeremonialCloth2],
     description: 'Traditional ceremonial cloth for wedding rituals, crafted with intricate designs and premium fabric.',
     details: [
       'Premium quality fabric',
