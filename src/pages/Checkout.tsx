@@ -457,6 +457,31 @@ ${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
                   </div>
                 </div>
 
+                {/* Attention Required Box */}
+                <div className="card-soft p-6 border-2 border-amber-400/50 bg-amber-50/30 dark:bg-amber-900/10">
+                  <h2 className="flex items-center gap-2 text-lg font-bold mb-4 text-amber-700 dark:text-amber-400">
+                    ⚠️ Attention Required
+                  </h2>
+                  <ul className="space-y-2 text-sm text-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-600">•</span>
+                      <span>Please order <strong>a week in advance</strong> for regular orders</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-600">•</span>
+                      <span>Delivery timeline: <strong>3-4 days</strong></span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-600">•</span>
+                      <span>For <strong>Rush (URGENT)</strong> orders, extra charges will apply</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-amber-600">•</span>
+                      <span>For <strong>wedding-related orders</strong>, please order a month in advance</span>
+                    </li>
+                  </ul>
+                </div>
+
                 {/* Submit Button - Mobile Only */}
                 <button
                   type="submit"
