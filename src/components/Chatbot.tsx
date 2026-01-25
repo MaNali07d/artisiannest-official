@@ -37,7 +37,7 @@ const botResponses: Record<string, { text: string; quickReplies?: QuickReply[] }
     quickReplies: initialQuickReplies,
   },
   birthday: {
-    text: "Aww, birthdays are the best! 🎂✨\n\nWe have some amazing birthday hampers starting from ₹599!\n\nOur Handmade Birthday Hamper (₹1299) is super popular - it comes with personalized goodies!\n\nWant to see more or create something custom? 💖",
+    text: "Aww, birthdays are the best! 🎂✨\n\nWe have some amazing birthday gifts!\n\n🎁 Handmade Birthday Hamper - ₹399\n🎁 Personalized Gift Box - ₹499\n🧺 Mini Gift Hamper - ₹599\n\nWant to see more or create something custom? 💖",
     quickReplies: [
       { label: '✨ Make it Custom', icon: '✨', action: 'custom' },
       { label: '🛒 Add to Cart', icon: '🛒', action: 'cart' },
@@ -45,7 +45,7 @@ const botResponses: Record<string, { text: string; quickReplies?: QuickReply[] }
     ],
   },
   anniversary: {
-    text: "Aww, that's so sweet! 💕\n\nAnniversaries deserve something extra special!\n\nOur Anniversary Gift Set (₹1499) includes everything to make the moment unforgettable.\n\nOr I can help you create a completely custom gift! What do you think? 🌹",
+    text: "Aww, that's so sweet! 💕\n\nAnniversaries deserve something extra special!\n\n💝 Personalized Gift Box - ₹499\n🌸 Customize Flowers Bouquet - ₹499\n🧺 Mini Gift Hamper - ₹599\n\nOr I can help you create a completely custom gift! What do you think? 🌹",
     quickReplies: [
       { label: '✨ Make it Custom', icon: '✨', action: 'custom' },
       { label: '🛒 View Cart', icon: '🛒', action: 'cart' },
