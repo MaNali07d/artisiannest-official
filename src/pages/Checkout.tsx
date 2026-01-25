@@ -17,6 +17,10 @@ const Checkout = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'online'>('cod');
+  
+  const DELIVERY_CHARGE = 65;
+  const finalTotal = paymentMethod === 'cod' ? totalPrice + DELIVERY_CHARGE : totalPrice;
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -101,8 +105,9 @@ ${sanitizedData.city}, ${sanitizedData.state} - ${sanitizedData.pincode}
 *Order Items:*
 ${itemsList}
 
-💰 *Total: ₹${totalPrice.toLocaleString('en-IN')}*
-💵 *Payment: Cash on Delivery*
+💰 *Subtotal: ₹${totalPrice.toLocaleString('en-IN')}*
+${paymentMethod === 'cod' ? `🚚 *Delivery Charges: ₹${DELIVERY_CHARGE}*\n` : ''}💰 *Total: ₹${finalTotal.toLocaleString('en-IN')}*
+💵 *Payment: ${paymentMethod === 'cod' ? 'Cash on Delivery' : 'Online Payment (UPI/GPay)'}*
 
 ${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
 
@@ -393,21 +398,62 @@ ${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
                   </h2>
                   <div className="space-y-3">
                     {/* Cash on Delivery */}
-                    <div className="p-4 bg-mint/30 rounded-xl border-2 border-primary">
-                      <p className="text-sm text-foreground">
-                        💚 <strong>Cash on Delivery</strong> - Pay when you receive + extra delivery charges
-                      </p>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('cod')}
+                      className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
+                        paymentMethod === 'cod'
+                          ? 'bg-mint/30 border-primary'
+                          : 'bg-muted/30 border-border hover:border-primary/50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                          paymentMethod === 'cod' ? 'border-primary' : 'border-muted-foreground'
+                        }`}>
+                          {paymentMethod === 'cod' && (
+                            <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-sm text-foreground">
+                            💚 <strong>Cash on Delivery</strong>
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            Pay when you receive + ₹{DELIVERY_CHARGE} delivery charges
+                          </p>
+                        </div>
+                      </div>
+                    </button>
                     
                     {/* Online Payment */}
-                    <div className="p-4 bg-lavender/30 rounded-xl">
-                      <p className="text-sm text-foreground">
-                        💳 <strong>Online Payment</strong> - Pay after order confirmation
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        Google Pay / UPI payment link will be shared on WhatsApp after order confirmation
-                      </p>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setPaymentMethod('online')}
+                      className={`w-full p-4 rounded-xl border-2 text-left transition-all ${
+                        paymentMethod === 'online'
+                          ? 'bg-lavender/30 border-primary'
+                          : 'bg-muted/30 border-border hover:border-primary/50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                          paymentMethod === 'online' ? 'border-primary' : 'border-muted-foreground'
+                        }`}>
+                          {paymentMethod === 'online' && (
+                            <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="text-sm text-foreground">
+                            💳 <strong>Online Payment</strong>
+                          </p>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            Google Pay / UPI payment link will be shared on WhatsApp after order confirmation
+                          </p>
+                        </div>
+                      </div>
+                    </button>
                   </div>
                 </div>
 
@@ -425,7 +471,7 @@ ${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
                   ) : (
                     <>
                       <Package size={18} />
-                      <span>Place Order • ₹{totalPrice.toLocaleString('en-IN')}</span>
+                      <span>Place Order • ₹{finalTotal.toLocaleString('en-IN')}</span>
                     </>
                   )}
                 </button>
@@ -457,10 +503,20 @@ ${sanitizedData.notes ? `📝 *Notes:* ${sanitizedData.notes}` : ''}`;
                   ))}
                 </div>
 
-                <div className="border-t border-border pt-4">
-                  <div className="flex justify-between text-lg font-bold">
+                <div className="border-t border-border pt-4 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span>₹{totalPrice.toLocaleString('en-IN')}</span>
+                  </div>
+                  {paymentMethod === 'cod' && (
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Delivery Charges (COD)</span>
+                      <span>₹{DELIVERY_CHARGE}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between text-lg font-bold pt-2 border-t border-border">
                     <span>Total</span>
-                    <span className="text-primary">₹{totalPrice.toLocaleString('en-IN')}</span>
+                    <span className="text-primary">₹{finalTotal.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
 
