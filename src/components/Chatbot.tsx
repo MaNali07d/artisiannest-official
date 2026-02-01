@@ -525,6 +525,7 @@ const Chatbot = () => {
                 <button
                   onClick={handleSend}
                   disabled={!inputText.trim()}
+                  aria-label="Send message"
                   className="p-3 bg-primary text-primary-foreground rounded-full 
                            disabled:opacity-50 disabled:cursor-not-allowed
                            hover:shadow-glow transition-all active:scale-95"
