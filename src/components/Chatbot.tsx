@@ -1,7 +1,8 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import { X, Send, MessageCircle, GripHorizontal, Minimize2, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '@/contexts/CartContext';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 interface Message {
   id: number;
@@ -127,20 +128,20 @@ const Chatbot = () => {
   const chatWindowRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { setIsCartOpen } = useCart();
+  const isMobile = useIsMobile();
 
   // Initialize position when opening
   useEffect(() => {
-    if (isOpen && position.x === 0 && position.y === 0) {
-      const isMobile = window.innerWidth < 768;
-      if (!isMobile) {
-        // Position at bottom-right with some margin
+    if (isOpen && position.x === 0 && position.y === 0 && !isMobile) {
+      // Use requestAnimationFrame to batch layout reads
+      requestAnimationFrame(() => {
         setPosition({
           x: window.innerWidth - 420,
           y: window.innerHeight - 560,
         });
-      }
+      });
     }
-  }, [isOpen]);
+  }, [isOpen, isMobile]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -165,7 +166,7 @@ const Chatbot = () => {
 
   // Mouse drag handlers
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
-    if (window.innerWidth < 768) return; // Disable drag on mobile for now, use touch instead
+    if (isMobile) return; // Disable drag on mobile for now, use touch instead
     
     e.preventDefault();
     setIsDragging(true);
@@ -177,7 +178,7 @@ const Chatbot = () => {
         y: e.clientY - rect.top,
       });
     }
-  }, []);
+  }, [isMobile]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging) return;
@@ -195,7 +196,7 @@ const Chatbot = () => {
 
   // Touch drag handlers
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (window.innerWidth >= 768) return; // Use mouse events on desktop
+    if (!isMobile) return; // Use mouse events on desktop
     
     const touch = e.touches[0];
     setIsDragging(true);
@@ -207,7 +208,7 @@ const Chatbot = () => {
         y: touch.clientY - rect.top,
       });
     }
-  }, []);
+  }, [isMobile]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
     if (!isDragging) return;
@@ -378,9 +379,9 @@ const Chatbot = () => {
     setIsMinimized(!isMinimized);
   };
 
-  // Desktop position styles
-  const getDesktopStyles = (): React.CSSProperties => {
-    if (window.innerWidth < 768) return {};
+  // Desktop position styles - memoized to prevent reflow
+  const desktopStyles = useMemo((): React.CSSProperties | undefined => {
+    if (isMobile) return undefined;
     
     return {
       position: 'fixed',
@@ -389,7 +390,7 @@ const Chatbot = () => {
       right: 'auto',
       bottom: 'auto',
     };
-  };
+  }, [isMobile, position.x, position.y]);
 
   return (
     <>
@@ -407,7 +408,7 @@ const Chatbot = () => {
       {/* Draggable Chat Window */}
       <div
         ref={chatWindowRef}
-        style={window.innerWidth >= 768 ? getDesktopStyles() : undefined}
+        style={desktopStyles}
         className={`fixed z-50 transition-all duration-300 ease-out
                    md:w-96 md:rounded-2xl
                    bottom-0 left-0 right-0 md:bottom-auto md:left-auto md:right-auto
@@ -422,7 +423,7 @@ const Chatbot = () => {
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           className={`bg-gradient-to-r from-primary to-coral-light p-4 flex items-center justify-between
-                     ${window.innerWidth >= 768 ? 'cursor-grab active:cursor-grabbing' : ''}
+                     ${!isMobile ? 'cursor-grab active:cursor-grabbing' : ''}
                      select-none transition-all duration-200
                      ${isDragging ? 'bg-gradient-to-r from-primary/90 to-coral-light/90' : ''}`}
         >
