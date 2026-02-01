@@ -126,6 +126,7 @@ const Chatbot = () => {
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatWindowRef = useRef<HTMLDivElement>(null);
+  const windowDimensionsRef = useRef({ width: 0, height: 0 });
   const navigate = useNavigate();
   const { setIsCartOpen } = useCart();
   const isMobile = useIsMobile();
@@ -151,10 +152,22 @@ const Chatbot = () => {
     scrollToBottom();
   }, [messages]);
 
-  // Constrain position within screen bounds
+  // Cache window dimensions to avoid forced reflow during drag
+  useEffect(() => {
+    const updateDimensions = () => {
+      windowDimensionsRef.current = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
+    };
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  // Constrain position within screen bounds (uses cached dimensions)
   const constrainPosition = useCallback((x: number, y: number): Position => {
-    const windowWidth = window.innerWidth;
-    const windowHeight = window.innerHeight;
+    const { width: windowWidth, height: windowHeight } = windowDimensionsRef.current;
     const chatWidth = 384; // w-96 = 24rem = 384px
     const chatHeight = 500;
 
