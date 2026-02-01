@@ -87,7 +87,7 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
               </button>
               
               {/* Image Indicators */}
-              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-0">
                 {images.map((_, idx) => (
                   <button
                     key={idx}
@@ -95,13 +95,15 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
                       e.stopPropagation();
                       setCurrentImageIndex(idx);
                     }}
-                    className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                      idx === currentImageIndex 
-                        ? 'bg-primary w-4' 
-                        : 'bg-background/70 hover:bg-background'
-                    }`}
+                    className="p-2 flex items-center justify-center"
                     aria-label={`View image ${idx + 1}`}
-                  />
+                  >
+                    <span className={`block rounded-full transition-all duration-300 ${
+                      idx === currentImageIndex 
+                        ? 'bg-primary w-4 h-2' 
+                        : 'bg-background/70 hover:bg-background w-2 h-2'
+                    }`} />
+                  </button>
                 ))}
               </div>
             </>
