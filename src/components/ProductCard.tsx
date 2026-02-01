@@ -18,6 +18,9 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
   const images = product.images && product.images.length > 0 ? product.images : [product.image];
   const hasMultipleImages = images.length > 1;
 
+  // First 4 products are above the fold, load eagerly with high priority
+  const isAboveFold = index < 4;
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
     addToCart(product);
@@ -52,7 +55,11 @@ const ProductCard = ({ product, index }: ProductCardProps) => {
             src={images[currentImageIndex]}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            loading="lazy"
+            loading={isAboveFold ? "eager" : "lazy"}
+            fetchPriority={isAboveFold ? "high" : "auto"}
+            decoding={isAboveFold ? "sync" : "async"}
+            width={320}
+            height={320}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent opacity-0 
                         group-hover:opacity-100 transition-opacity duration-300" />
