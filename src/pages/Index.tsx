@@ -1,11 +1,10 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect, lazy, Suspense } from 'react';
 import { Sparkles, Gift, Heart } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/Header';
 import ProductCard from '@/components/ProductCard';
 import Cart from '@/components/Cart';
 import Footer from '@/components/Footer';
-import Chatbot from '@/components/Chatbot';
 import DoodleBackground from '@/components/DoodleBackground';
 import Mascot from '@/components/Mascot';
 import PersonalBadge from '@/components/PersonalBadge';
@@ -13,8 +12,26 @@ import SparkleButton from '@/components/SparkleButton';
 import TestimonialCarousel from '@/components/TestimonialCarousel';
 import { products } from '@/data/products';
 
+// Lazy load Chatbot to improve TTI - only load after page is interactive
+const Chatbot = lazy(() => import('@/components/Chatbot'));
+
 const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [showChatbot, setShowChatbot] = useState(false);
+
+  // Defer Chatbot loading to after page is interactive
+  useEffect(() => {
+    // Use requestIdleCallback if available, otherwise setTimeout
+    const loadChatbot = () => setShowChatbot(true);
+    
+    if ('requestIdleCallback' in window) {
+      const id = window.requestIdleCallback(loadChatbot, { timeout: 3000 });
+      return () => window.cancelIdleCallback(id);
+    } else {
+      const id = setTimeout(loadChatbot, 2000);
+      return () => clearTimeout(id);
+    }
+  }, []);
 
   const filteredProducts = useMemo(() => {
     if (!searchQuery.trim()) return products;
@@ -170,7 +187,11 @@ const Index = () => {
       <Footer />
       <Cart />
       
-      <Chatbot />
+      {showChatbot && (
+        <Suspense fallback={null}>
+          <Chatbot />
+        </Suspense>
+      )}
     </div>
   );
 };
