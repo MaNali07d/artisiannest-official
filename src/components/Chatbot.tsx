@@ -177,21 +177,19 @@ const Chatbot = () => {
     };
   }, []);
 
-  // Mouse drag handlers
+  // Mouse drag handlers - use cached position to avoid forced reflow
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (isMobile) return; // Disable drag on mobile for now, use touch instead
     
     e.preventDefault();
     setIsDragging(true);
     
-    const rect = chatWindowRef.current?.getBoundingClientRect();
-    if (rect) {
-      setDragOffset({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
-      });
-    }
-  }, [isMobile]);
+    // Use current position state instead of getBoundingClientRect to avoid forced reflow
+    setDragOffset({
+      x: e.clientX - position.x,
+      y: e.clientY - position.y,
+    });
+  }, [isMobile, position.x, position.y]);
 
   const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging) return;
@@ -207,21 +205,19 @@ const Chatbot = () => {
     setIsDragging(false);
   }, []);
 
-  // Touch drag handlers
+  // Touch drag handlers - use cached position to avoid forced reflow
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (!isMobile) return; // Use mouse events on desktop
     
     const touch = e.touches[0];
     setIsDragging(true);
     
-    const rect = chatWindowRef.current?.getBoundingClientRect();
-    if (rect) {
-      setDragOffset({
-        x: touch.clientX - rect.left,
-        y: touch.clientY - rect.top,
-      });
-    }
-  }, [isMobile]);
+    // Use current position state instead of getBoundingClientRect to avoid forced reflow
+    setDragOffset({
+      x: touch.clientX - position.x,
+      y: touch.clientY - position.y,
+    });
+  }, [isMobile, position.x, position.y]);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
     if (!isDragging) return;
